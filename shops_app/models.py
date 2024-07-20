@@ -35,7 +35,7 @@ class Product(models.Model):
     title = models.CharField(max_length=250)
     description = models.CharField(max_length=500)
     category = models.CharField(max_length=25, choices=PRODUCT_CATEGORIES)
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='products')
     sku = models.CharField(max_length=50)
     brand = models.CharField(max_length=50)
     available = models.BooleanField()
