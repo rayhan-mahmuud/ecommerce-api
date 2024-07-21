@@ -51,10 +51,13 @@ class Review(models.Model):
     rating = models.DecimalField(max_digits=5, decimal_places=2, 
                                  validators=[MaxValueValidator(5),MinValueValidator(1)])
     text = models.CharField(max_length=500)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     review_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    
+    def __str__(self) -> str:
+        return f"{self.text} - {self.rating}"
     
 
 
