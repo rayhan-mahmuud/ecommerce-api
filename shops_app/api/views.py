@@ -9,6 +9,10 @@ class ShopListView(generics.ListCreateAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
     
+    def perform_create(self, serializer):
+        owner = self.request.user
+        serializer.save(owner=owner)
+    
 
 class ShopDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Shop.objects.all()
@@ -27,6 +31,15 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ProductReviewsList(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    
+    def perform_create(self, serializer):
+        review_by = self.request.user
+        serializer.save(review_by=review_by)
+    
+
+# class ShopReviewsList(generics.ListCreateAPIView):
+#     queryset = ShopReview.objects.all()
+#     serializer_class = ShopReviewSerializer
     
     
     
