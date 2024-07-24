@@ -24,6 +24,8 @@ class Shop(models.Model):
     website = models.URLField(max_length=250)
     phone = models.CharField(max_length=20)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    avg_rating = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    total_ratings = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     
@@ -60,6 +62,16 @@ class Review(models.Model):
         return f"{self.text} - {self.rating}"
     
 
+class ShopReview(models.Model):
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5),MinValueValidator(1)])
+    text = models.CharField(max_length=500)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='shop_reviews')
+    review_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{self.text} - {self.rating}"
 
 
 

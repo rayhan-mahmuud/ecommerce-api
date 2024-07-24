@@ -1,7 +1,7 @@
 from rest_framework import generics
 
-from shops_app.models import Shop, Product, Review
-from shops_app.api.serializers import ShopSerializer, ProductSerializer, ReviewSerializer
+from shops_app.models import Shop, Product, Review, ShopReview
+from shops_app.api.serializers import ShopSerializer, ProductSerializer, ReviewSerializer, ShopReviewSerializer
 
 
 
@@ -28,6 +28,7 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     
+    
 class ProductReviewsList(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -37,9 +38,13 @@ class ProductReviewsList(generics.ListCreateAPIView):
         serializer.save(review_by=review_by)
     
 
-# class ShopReviewsList(generics.ListCreateAPIView):
-#     queryset = ShopReview.objects.all()
-#     serializer_class = ShopReviewSerializer
+class ShopReviewsList(generics.ListCreateAPIView):
+    queryset = ShopReview.objects.all()
+    serializer_class = ShopReviewSerializer
+    
+    def perform_create(self, serializer):
+        review_by = self.request.user
+        serializer.save(review_by=review_by)
     
     
     
