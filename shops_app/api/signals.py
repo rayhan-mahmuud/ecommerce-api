@@ -21,7 +21,7 @@ def update_ratings_on_shopreview_create(sender, instance, created, **kwargs):
         instance.shop.avg_rating = avg_rating
         instance.shop.total_ratings = total_rating_count
         
-        instance.save()
+        instance.shop.save()
 
        
 # Updates the avg_rating and total ratings of the Shop model on deleting a ShopReview        
@@ -40,6 +40,6 @@ def update_ratings_on_shopreview_delete(sender, instance, **kwargs):
     instance.shop.avg_rating = avg_rating
     instance.shop.total_ratings = total_rating_count
     
-    instance.save()
+    instance.shop.save()
     
     
