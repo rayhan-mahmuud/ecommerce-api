@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 from shops_app.models import Shop, Product, Review, ShopReview
 from shops_app.api.serializers import ShopSerializer, ProductSerializer, ReviewSerializer, ShopReviewSerializer
@@ -8,6 +9,7 @@ from shops_app.api.serializers import ShopSerializer, ProductSerializer, ReviewS
 class ShopListView(generics.ListCreateAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
+    permission_classes = [IsAuthenticated]
     
     def perform_create(self, serializer):
         owner = self.request.user
@@ -17,6 +19,7 @@ class ShopListView(generics.ListCreateAPIView):
 class ShopDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
+    permission_classes = [IsAuthenticated]
     
 
 class ProductListView(generics.ListCreateAPIView):
