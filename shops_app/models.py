@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
@@ -23,7 +23,7 @@ class Shop(models.Model):
     location = models.CharField(max_length=250)
     website = models.URLField(max_length=250)
     phone = models.CharField(max_length=20)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     avg_rating = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     total_ratings = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
@@ -54,7 +54,7 @@ class Review(models.Model):
                                  validators=[MaxValueValidator(5),MinValueValidator(1)])
     text = models.CharField(max_length=500)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
-    review_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    review_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
     
@@ -66,7 +66,7 @@ class ShopReview(models.Model):
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5),MinValueValidator(1)])
     text = models.CharField(max_length=500)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='shop_reviews')
-    review_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    review_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
