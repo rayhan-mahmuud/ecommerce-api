@@ -1,3 +1,7 @@
 from django.contrib import admin
+from users_app.models import User, ShopOwner, Customer
 
-# Register your models here.
+
+admin.site.register(User)
+admin.site.register(ShopOwner)
+admin.site.register(Customer)
